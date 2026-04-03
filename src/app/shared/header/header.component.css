@@ -1,0 +1,170 @@
+/* Header container */
+.card {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+/* Menubar styling */
+:host ::ng-deep .p-menubar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 0;
+  padding: 0.5rem 2rem;
+}
+
+:host ::ng-deep .p-menubar-root-list {
+  gap: 0.5rem;
+}
+
+/* Menu items */
+:host ::ng-deep .p-menubar-item-link {
+  color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+:host ::ng-deep .p-menubar-item-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Custom item template styling */
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.ms-auto {
+  margin-left: auto;
+}
+
+/* Badge styling */
+:host ::ng-deep .p-badge {
+  background-color: #ff6b6b;
+  font-size: 0.75rem;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  line-height: 1.25rem;
+}
+
+/* Shortcut styling */
+.border {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.border-surface {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.rounded {
+  border-radius: 0.375rem;
+}
+
+.bg-emphasis {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.text-muted-color {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
+}
+
+/* Search input */
+.w-36 {
+  width: 9rem;
+}
+
+:host ::ng-deep .p-inputtext {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+}
+
+:host ::ng-deep .p-inputtext::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+:host ::ng-deep .p-inputtext:focus {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Avatar */
+:host ::ng-deep .p-avatar {
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  transition: border-color 0.2s ease;
+}
+
+:host ::ng-deep .p-avatar:hover {
+  border-color: #ffffff;
+}
+
+/* Logo styling */
+.block {
+  display: block;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Submenu styling */
+:host ::ng-deep .p-menubar-submenu {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem;
+  min-width: 200px;
+}
+
+:host ::ng-deep .p-menubar-submenu .p-menubar-item-link {
+  color: #333333;
+  border-radius: 0.375rem;
+}
+
+:host ::ng-deep .p-menubar-submenu .p-menubar-item-link:hover {
+  background-color: #f3f4f6;
+}
+
+/* Separator in submenu */
+:host ::ng-deep .p-menubar-separator {
+  border-top: 1px solid #e5e7eb;
+  margin: 0.5rem 0;
+}
+
+/* Icons */
+.pi {
+  font-size: 0.875rem;
+}
