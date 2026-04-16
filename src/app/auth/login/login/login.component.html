@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+    <div class="card auth">
+      <div class="card-body auth-card">
+        <div class="auth-avatar">
+          <img src="https://pluspng.com/img-png/user-png-icon-account-avatar-human-male-man-men-people-person-download-svg-download-png-edit-icon-512.png" alt="user" class="user-image">
+        </div>
+        <form #form="ngForm" (ngSubmit)="login(form)">
+          <div class="form-group">
+            <label for="email">Email : </label>
+            <input
+            type="text"
+            name="email"
+            class="form-control"
+            [class.input-error]="inputEmail.invalid && inputEmail.touched"
+            placeholder="max.mustermann@gmail.com"
+            ngModel
+            #inputEmail ="ngModel"
+            required
+            appEmail
+            >
+             @if (inputEmail.invalid && inputEmail.touched) {
+                    <div>
+                    @if (inputEmail.errors?.['required']) {
+                        <p class="error">
+                    Email is required!
+                </p>
+                    }@if (inputEmail.errors?.['Email']) {
+                        <p class="error">
+                    Email is not valid!
+                </p>
+                    }
+                    </div>
+                }
+          </div>
+          <div class="form-group">
+            <label for="password">Password : </label>
+            <input
+            type="password"
+            name="password"
+            class="form-control"
+            [class.input-error]="passInput.invalid && passInput.touched"
+            placeholder="********"
+            ngModel
+            #passInput="ngModel"
+            minlength="5"
+            required
+            >
+            <div>
+                    @if (passInput.invalid && passInput.touched) {
+                        @if (passInput.errors?.['required']) {
+                            <p class="error">
+                            Password is required!
+                            </p>
+                        }
+                        @if (passInput.errors?.['minlength'] ) {
+                            <p class="error">
+                            Password must be at least 4 characters!
+                        </p>
+                        }
+                    }
+
+
+                </div>
+            <div class="text-right forget-pass">
+              <!-- <a routerLink="/forget-password">Forget Password ?</a> -->
+            </div>
+          </div>
+          <button
+          class="btn btn-my"
+          [disabled]="form.invalid"
+          >Login</button>
+         <!--  <div class="text-center">
+            <input type="submit" class="btn btn-my" value="Login">
+          </div> -->
+        </form>
+        <div class="text-center sign-up">
+          Don`t have an account ? <a routerLink="/register">Sign Up</a> hera.
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

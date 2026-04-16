@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+    <div class="card auth">
+      <div class="card-body auth-card">
+        <div class="auth-avatar">
+          <img src="https://pluspng.com/img-png/user-png-icon-account-avatar-human-male-man-men-people-person-download-svg-download-png-edit-icon-512.png" alt="user" class="user-image">
+        </div>
+        <form #form="ngForm" (ngSubmit)="register(form)">
+          <!-- Username -->
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="form-control"
+              [class.input-error]="usernameInput.touched && (usernameInput.errors?.['required'] || usernameInput.errors?.['minlength'])"
+              placeholder="Johny"
+              ngModel
+              #usernameInput="ngModel"
+              required
+              minlength="3"
+            >
+            @if (usernameInput.invalid && usernameInput.touched) {
+              @if (usernameInput.errors?.['required']) {
+                <p class="error">Username is required!</p>
+              }
+              @if (usernameInput.errors?.['minlength']) {
+                <p class="error">Username must be at least 3 characters long!</p>
+              }
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="form-control"
+              [class.input-error]="emailInput.touched && (emailInput.errors?.['required'] || emailInput.errors?.['Email'])"
+              placeholder="john.doe@gmail.com"
+              ngModel
+              #emailInput="ngModel"
+              appEmail
+              required
+            >
+            @if (emailInput.invalid && emailInput.touched) {
+              @if (emailInput.errors?.['required']) {
+                <p class="error">Email is required!</p>
+              }
+              @if (emailInput.errors?.['Email']) {
+                <p class="error">Email is not valid!</p>
+              }
+            }
+          </div>
+
+          <!-- Telephone -->
+          <div class="form-group">
+            <label for="tel">Telephone:</label>
+            <div class="tel-group">
+              <select name="select-tel" id="select-tel" class="form-control tel-select" ngModel>
+                <option value="00359">+359</option>
+              </select>
+              <input
+                type="text"
+                name="tel"
+                id="tel"
+                class="form-control tel-input"
+                placeholder="885 888 888"
+                ngModel
+                #telefonInput="ngModel"
+              >
+            </div>
+          </div>
+
+          <!-- Passwords -->
+          <div ngModelGroup="passwords" #passwordsGroup="ngModelGroup" appMatchPasswords>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                class="form-control"
+                placeholder="******"
+                ngModel
+                [class.input-error]="passwordsGroup.invalid && passwordsGroup.touched"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="rePassword">Repeat Password:</label>
+              <input
+                type="password"
+                name="rePassword"
+                id="rePassword"
+                class="form-control"
+                placeholder="******"
+                ngModel
+                [class.input-error]="passwordsGroup.invalid && passwordsGroup.touched"
+              >
+            </div>
+
+            @if (passwordsGroup.invalid && passwordsGroup.touched) {
+              @if (passwordsGroup.errors?.['passwordIsRequired']) {
+                <p class="error">Password is required!</p>
+              }
+              @if (passwordsGroup.errors?.['passwordPattern']) {
+                <p class="error">Password must be at least 5 characters (letters and digits only)!</p>
+              }
+              @if (passwordsGroup.errors?.['passwordMismatch']) {
+                <p class="error">Repeat Password does not match password!</p>
+              }
+            }
+          </div>
+
+          <button class="btn btn-my" [disabled]="form.invalid">Register</button>
+        </form>
+        <div class="text-center sign-up">
+          Already have an account? <a routerLink="/login">Login</a> here.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
