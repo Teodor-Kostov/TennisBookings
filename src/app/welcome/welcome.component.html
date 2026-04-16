@@ -1,0 +1,31 @@
+<div class="welcome">
+  <h1>Welcome to your Tennis Booking Platform!</h1>
+  <p>Easily reserve courts, manage your bookings, and enjoy your game without hassle. Let's get you on the court!</p>
+
+  @if (user$ | async; as user) {
+    <div class="logged-in">
+      <p class="greeting">Hello, {{ user.username }}!</p>
+      <a routerLink="/slots" class="btn-book">
+        <i class="fas fa-calendar-plus"></i>
+        Book a Court
+      </a>
+    </div>
+  } @else {
+    <div class="logged">
+      <ul>
+        <li>
+          <a routerLink="/login">
+            <i class="fas fa-sign-in-alt"></i>
+            Login
+          </a>
+        </li>
+        <li>
+          <a routerLink="/register">
+            <i class="fas fa-user-plus"></i>
+            Register
+          </a>
+        </li>
+      </ul>
+    </div>
+  }
+</div>
