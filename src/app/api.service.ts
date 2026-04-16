@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment.development';
-import { User, LoginRequest, RegisterRequest, EditProfileRequest } from './types';
+import { User, LoginRequest, RegisterRequest, EditProfileRequest, Booking, CreateBooking, CreateCourt, BookingRaw, BusySlot, Court } from './types';
 
 
+export type UpdateBooking = Omit<CreateBooking, 'user'>;
 
 interface UserApi {
   login(data: LoginRequest): Observable<User>;
@@ -14,6 +15,26 @@ interface UserApi {
   getProfile(): Observable<User>;
   updateProfile(data: EditProfileRequest): Observable<User>;
 }
+
+interface BookingApi {
+  getBookingList(): Observable<Booking[]>;
+  getBusySlots(date: string): Observable<BusySlot[]>;
+  createBooking(data: CreateBooking): Observable<BookingRaw>;
+  updateBooking(id: string, data: UpdateBooking): Observable<BookingRaw>;
+  //TODO: delete booking is can be made only by a Admin (future music)
+}
+
+interface CourtApi {
+    getAllCourts(): Observable<Court[]>;
+
+    getCourt(id: string): Observable<Court>;
+
+    createCourt(data: CreateCourt): Observable<Court>;
+
+    updateCourt(id: string, data: CreateCourt): Observable<Court>;
+
+    deleteCourt(id: string): Observable<Court>;
+  };
 
 
 @Injectable({
@@ -50,5 +71,59 @@ export class ApiService {
       data,
       { withCredentials: true }
     )
+  };
+
+  bookingApi: BookingApi = {
+
+    getBookingList: (): Observable<Booking[]> => {
+      return this.http.get<Booking[]>(`${this.apiUrl}/bookings/admin`, {
+        params: { date: new Date().toISOString() },
+        withCredentials: true
+      });
+    },
+
+    getBusySlots: (date: string): Observable<BusySlot[]> => {
+      return this.http.get<BusySlot[]>(`${this.apiUrl}/bookings/busy`, {
+        params: { date },
+        withCredentials: true
+      });
+    },
+
+    createBooking: (data: CreateBooking): Observable<BookingRaw> => {
+      return this.http.post<BookingRaw>(`${this.apiUrl}/bookings`, data, {
+        withCredentials: true
+      });
+    },
+
+    updateBooking: (id: string, data: UpdateBooking): Observable<BookingRaw> => {
+      return this.http.put<BookingRaw>(`${this.apiUrl}/bookings/${id}`, data, {
+        withCredentials: true
+      });
+    }
+
+  };
+
+  courtApi: CourtApi = {
+    getAllCourts: (): Observable<Court[]> => {
+      return this.http.get<Court[]>(`${this.apiUrl}/courts`);
+    },
+
+    getCourt: (id: string): Observable<Court> => {
+      return this.http.get<Court>(`${this.apiUrl}/courts/${id}`);
+    },
+
+    createCourt: (data: CreateCourt): Observable<Court> => {
+      return this.http.post<Court>(`${this.apiUrl}/courts`, data, {
+        withCredentials: true
+      });
+    },
+
+    updateCourt: (id: string, data: CreateCourt): Observable<Court> => {
+      return this.http.put<Court>(`${this.apiUrl}/courts/${id}`, data);
+    },
+
+    deleteCourt: (id: string): Observable<Court> => {
+      return this.http.delete<Court>(`${this.apiUrl}/courts/${id}`);
+    }
   };
 }
