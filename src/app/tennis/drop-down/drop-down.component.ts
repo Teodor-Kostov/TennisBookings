@@ -20,7 +20,7 @@ export class CourtTypeDropdownComponent {
         { label: 'Hard Court', value: 'Hard' }
     ];
 
-    selectedCourtType: CourtType | undefined;
+    selectedCourtType: CourtType = 'Hard';
 
     @Output() courtTypeChange = new EventEmitter<CourtType>();
 

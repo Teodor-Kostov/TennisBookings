@@ -6,7 +6,7 @@
     [value]="selectedDate | date:'yyyy-MM-dd'"
     (change)="onDateChange($event)"
   >
-  <app-court-type-dropdown (courtTypeChange)="onCourtTypeSelected($event)"></app-court-type-dropdown>  
+  <app-court-type-dropdown (courtTypeChange)="onCourtTypeSelected($event)"></app-court-type-dropdown>
 </div>
 
 @if (courts$ | async; as courts) {
@@ -16,7 +16,10 @@
         <tr>
           <th class="time-column">Time</th>
           @for (court of courts; track court._id) {
-            <th>Court {{ court.number }}</th>
+            @if (court.type == selectedCourtType) {
+              <th>Court {{ court.number }}</th>
+            }
+
           }
         </tr>
       </thead>

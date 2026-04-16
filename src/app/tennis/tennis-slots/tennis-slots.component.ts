@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { tap, BehaviorSubject, switchMap } from 'rxjs';
+import { tap, BehaviorSubject, switchMap, combineLatest, map } from 'rxjs';
 import { Court, TimeSlot, BusySlot, CreateBooking, CourtType } from '../../types';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../auth/auth.service';
@@ -18,8 +18,16 @@ export class TennisSlotsComponent implements OnInit {
 
   // Selected date as a BehaviorSubject so we can change it
   private selectedDate$ = new BehaviorSubject<Date>(new Date());
+  private selectedCourtType$ = new BehaviorSubject<CourtType>('Hard');
 
-  courts$ = this.apiService.courtApi.getAllCourts();
+  private allCourts$ = this.apiService.courtApi.getAllCourts();
+
+  // Filtered courts based on selected court type
+  courts$ = combineLatest([this.allCourts$, this.selectedCourtType$]).pipe(
+    map(([courts, courtType]) => {
+      return courts.filter(court => court.type === courtType);
+    })
+  );
 
   // Busy slots react to date changes
   busySlots$ = this.selectedDate$.pipe(
@@ -33,7 +41,7 @@ export class TennisSlotsComponent implements OnInit {
 
   timeSlots: TimeSlot[] = [];
   busySlots: BusySlot[] = [];
-  selectedCourtType: CourtType | undefined;
+  selectedCourtType: CourtType = 'Hard';
 
   get selectedDate(): Date {
     return this.selectedDate$.value;
@@ -41,7 +49,7 @@ export class TennisSlotsComponent implements OnInit {
 
   onCourtTypeSelected(courtType: CourtType): void {
     this.selectedCourtType = courtType;
-    console.log('Selected court type:', courtType);
+    this.selectedCourtType$.next(courtType);
   }
 
   ngOnInit() {
