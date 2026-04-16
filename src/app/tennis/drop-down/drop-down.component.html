@@ -1,0 +1,7 @@
+<p-dropdown
+    [options]="courtTypes"
+    [(ngModel)]="selectedCourtType"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Select Court Type"
+    (onChange)="onCourtTypeChange()" />

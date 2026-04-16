@@ -6,6 +6,7 @@
     [value]="selectedDate | date:'yyyy-MM-dd'"
     (change)="onDateChange($event)"
   >
+  <app-court-type-dropdown (courtTypeChange)="onCourtTypeSelected($event)"></app-court-type-dropdown>  
 </div>
 
 @if (courts$ | async; as courts) {

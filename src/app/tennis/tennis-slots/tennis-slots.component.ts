@@ -1,13 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AsyncPipe, DatePipe, formatNumber } from '@angular/common';
-import { combineLatest, tap, BehaviorSubject, switchMap } from 'rxjs';
-import { Court, TimeSlot, BusySlot, CreateBooking } from '../../types';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { tap, BehaviorSubject, switchMap } from 'rxjs';
+import { Court, TimeSlot, BusySlot, CreateBooking, CourtType } from '../../types';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../auth/auth.service';
+import { CourtTypeDropdownComponent } from '../drop-down/drop-down.component';
 
 @Component({
   selector: 'app-tennis-slots',
-  imports: [AsyncPipe, DatePipe],
+  imports: [AsyncPipe, DatePipe, CourtTypeDropdownComponent],
   templateUrl: './tennis-slots.component.html',
   styleUrl: './tennis-slots.component.css'
 })
@@ -32,9 +33,15 @@ export class TennisSlotsComponent implements OnInit {
 
   timeSlots: TimeSlot[] = [];
   busySlots: BusySlot[] = [];
+  selectedCourtType: CourtType | undefined;
 
   get selectedDate(): Date {
     return this.selectedDate$.value;
+  }
+
+  onCourtTypeSelected(courtType: CourtType): void {
+    this.selectedCourtType = courtType;
+    console.log('Selected court type:', courtType);
   }
 
   ngOnInit() {
