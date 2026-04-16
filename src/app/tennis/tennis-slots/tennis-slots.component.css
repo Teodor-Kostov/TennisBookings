@@ -1,0 +1,82 @@
+.schedule-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+  font-family: Arial, sans-serif;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: center;
+}
+
+.schedule-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.time-column {
+  font-weight: 600;
+  background-color: #fafafa;
+  white-space: nowrap;
+}
+
+.slot-cell {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.slot-cell.free {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.slot-cell.free:hover {
+  background-color: #c8e6c9;
+}
+
+.slot-cell.busy {
+  background-color: #ffebee;
+  color: #c62828;
+  cursor: not-allowed;
+}
+
+.slot-cell.busy:hover {
+  background-color: #ffcdd2;
+}
+
+.slot-cell.my-booking {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  font-weight: 600;
+  cursor: default;
+}
+
+.slot-cell.my-booking:hover {
+  background-color: #bbdefb;
+}
+
+.date-picker {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-picker label {
+  font-weight: 600;
+}
+
+.date-picker input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}

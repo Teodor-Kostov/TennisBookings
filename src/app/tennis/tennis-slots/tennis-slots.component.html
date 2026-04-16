@@ -1,0 +1,48 @@
+<div class="date-picker">
+  <label for="date">Select Date:</label>
+  <input
+    type="date"
+    id="date"
+    [value]="selectedDate | date:'yyyy-MM-dd'"
+    (change)="onDateChange($event)"
+  >
+</div>
+
+@if (courts$ | async; as courts) {
+  <div class="schedule-wrapper">
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th class="time-column">Time</th>
+          @for (court of courts; track court._id) {
+            <th>Court {{ court.number }}</th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (slot of timeSlots; track slot.start) {
+          <tr>
+            <td class="time-column">
+              {{ slot.start }} - {{ slot.end }}
+            </td>
+
+            @for (court of courts; track court._id) {
+              <td
+                class="slot-cell"
+                [class.busy]="isSlotBusy(court, slot) && !isMyBooking(court, slot)"
+                [class.my-booking]="isMyBooking(court, slot)"
+                [class.free]="!isSlotBusy(court, slot)"
+                (click)="onSlotClick(court, slot)"
+              >
+                {{ getSlotDisplayText(court, slot) }}
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+} @else {
+  <p>Loading courts...</p>
+}
