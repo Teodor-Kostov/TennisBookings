@@ -1,0 +1,23 @@
+<div class="my-bookings">
+  <h2>My Bookings</h2>
+
+  @if (userBookings$ | async; as bookings) {
+    @if (bookings.length > 0) {
+      <div class="bookings-list">
+        @for (booking of bookings; track booking._id) {
+          <div [class]="isFutureBooking(booking) ? 'booking-card-future' : 'booking-card-past'">
+            <div class="booking-info">
+              <span class="court-info">Court {{ booking.court.number }} ({{ booking.court.type }})</span>
+              <span class="date-info">{{ booking.date | date:'mediumDate' }}</span>
+              <span class="time-info">{{ booking.startTime }} - {{ booking.endTime }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="no-bookings">You have no bookings yet.</p>
+    }
+  } @else {
+    <p>Loading bookings...</p>
+  }
+</div>

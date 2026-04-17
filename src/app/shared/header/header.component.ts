@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
                     {
                         label: 'My Bookings',
                         icon: 'pi pi-bolt',
+                        routerLink: '/my-bookings'
                     },
                     {
                         label: 'Book a Court',

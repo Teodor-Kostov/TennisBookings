@@ -1,0 +1,62 @@
+.my-bookings {
+  padding: 1rem;
+}
+
+.my-bookings h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.booking-card-past {
+  background: linear-gradient(135deg, #8e9eab 0%, #6b7b8a 100%);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+}
+
+.booking-card-future {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.booking-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.court-info {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.date-info {
+  font-size: 0.95rem;
+}
+
+.time-info {
+  font-size: 0.95rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+}
+
+.no-bookings {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+}
