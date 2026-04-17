@@ -18,6 +18,7 @@ interface UserApi {
 
 interface BookingApi {
   getBookingList(): Observable<Booking[]>;
+  getUserBookingList(): Observable<BookingRaw[]>;
   getBusySlots(date: string): Observable<BusySlot[]>;
   createBooking(data: CreateBooking): Observable<BookingRaw>;
   updateBooking(id: string, data: UpdateBooking): Observable<BookingRaw>;
@@ -81,6 +82,13 @@ export class ApiService {
         withCredentials: true
       });
     },
+
+    getUserBookingList: (): Observable<BookingRaw[]> => {
+      return this.http.get<BookingRaw[]>(`${this.apiUrl}/bookings/my`,{
+         withCredentials: true
+      });
+
+     },
 
     getBusySlots: (date: string): Observable<BusySlot[]> => {
       return this.http.get<BusySlot[]>(`${this.apiUrl}/bookings/busy`, {

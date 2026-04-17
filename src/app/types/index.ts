@@ -46,7 +46,7 @@ export type Maybe<T> = T | null | undefined;
   //For crud
   export type BookingRaw = {
     _id: string;
-    court: string;
+    court: Court;
     user: string;
     date: string;
     startTime: string;
