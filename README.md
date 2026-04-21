@@ -1,38 +1,113 @@
-# Tennis Bookings 
+# Tennis Bookings
 
-# For REST-Api Information see below 
+## 1. Application Purpose
 
-A web application for booking tennis courts. Built with Angular and PrimeNG.
+The goal of the application is to help users book tennis courts at a tennis club. Users can view available time slots, make reservations, and manage their bookings. Administrators have additional features to manage the courts themselves.
 
-## What is this?
-As a dedicated tennis player i've decide to make a simple Tennis court booking.
-This app lets users book tennis courts at a tennis club. Users can see available time slots, make reservations, and manage their bookings. Admins have extra features to manage the courts themselves.
+## 2. User Roles
 
-## Features
+**Guest (Not Authenticated User)**
+- Can view the home page
+- Can register for an account
+- Can login
 
-### For Everyone (Guest)
-- View the home page
-- Register for an account
-- Login
+**Authenticated User**
+- Can browse available time slots and book a court
+- Can view and manage their upcoming bookings
+- Can update their profile details
 
-### For Logged-in Users
-- **Book a Court** - Browse available time slots and make a reservation
-- **My Bookings** - View and manage your upcoming bookings
-- **Profile** - Update your account details
+**Admin**
+- Has all authenticated user permissions
+- Can view all courts and activate/deactivate them
+- Can create new courts (Hard or Clay type)
+- Can delete courts
 
-### For Admins
-- **Manage Courts** - View all courts, activate/deactivate them, or delete them
-- **Add Court** - Create new courts (Hard or Clay type)
+## 3. Public Features
 
-## Tech Stack
+Features accessible without login:
+- Home page
+- Login page
+- Registration page
 
-- **Frontend:** Angular 19
-- **UI Components:** PrimeNG
-- **Styling:** Bootstrap + custom CSS
-- **Backend:** REST API (separate project)
+**Authenticated User Features**
 
+Functionality available after login:
+- Book a Court - Browse available time slots and make a reservation
+- My Bookings - View and manage upcoming bookings
+- Profile - Update account details
 
-## Getting Started
+**Admin Features**
+
+Additional functionality for admins:
+- Manage Courts - View all courts, activate/deactivate them
+- Add Court - Create new courts
+- Delete Court - Remove courts from the system
+
+## 4. Main Application Flow
+
+1. User opens the Home page
+2. User registers or logs in
+3. Authenticated user navigates to the booking page
+4. User selects an available time slot and court
+5. User creates a booking
+6. The booking appears in My Bookings
+7. User can view, edit, or cancel their bookings
+
+## 5. Data Structure
+
+**Court Object**
+- id
+- name
+- type (Hard / Clay)
+- isActive
+- createdAt
+
+**Booking Object**
+- id
+- courtId
+- userId
+- date
+- timeSlot
+- createdAt
+
+**User Object**
+- id
+- email
+- password
+- role (user / admin)
+- createdAt
+
+## 6. Project Architecture
+
+```
+src/
+├── app/
+│   ├── components/
+│   │   ├── home/
+│   │   ├── login/
+│   │   ├── register/
+│   │   ├── slots/
+│   │   ├── my-bookings/
+│   │   ├── profile/
+│   │   └── courts/
+│   ├── services/
+│   ├── guards/
+│   ├── models/
+│   └── shared/
+├── environments/
+└── assets/
+```
+
+## 7. Technologies Used
+
+- Angular 19
+- TypeScript
+- RxJS
+- PrimeNG (UI Components)
+- Bootstrap + custom CSS
+- REST API (Backend)
+
+## 8. How to Run the Project
 
 ### Prerequisites
 - Node.js (v18+)
@@ -41,25 +116,28 @@ This app lets users book tennis courts at a tennis club. Users can see available
 
 ### Installation
 
-```bash
-# Install dependencies
-npm install
+1. Clone the repository
 
-# Start development server
-ng serve
+2. Install dependencies
+```bash
+npm install
 ```
 
-The app will be available at `http://localhost:4200`
-
-### Environment
-
-Update `src/environments/environment.development.ts` with your API URL:
-
+3. Configure environment - Update `src/environments/environment.development.ts` with your API URL:
 ```typescript
 export const environment = {
   apiUrl: 'http://localhost:3000/api'
 };
 ```
+
+4. Start the application
+```bash
+ng serve
+```
+
+5. Open the application at http://localhost:4200
+
+---
 
 ## Routes
 
@@ -74,18 +152,58 @@ export const environment = {
 | `/courts` | Manage Courts | Admin |
 | `/courts/add` | Add Court | Admin |
 
-## User Roles
+---
 
-- **Guest** - Can only see home page and login/register
-- **User** - Can book courts and manage their bookings
-- **Admin** - Has all user permissions + court management
+# REST API Information
 
-The role is returned from the API in the user profile (`role: 'admin'` or `role: 'user'`).
+For more details see the README.md in the angular-workshop repo.
 
-## Court Types
+## Prerequisites
 
-- **Hard** - Hard surface courts 
-- **Clay** - Clay surface courts
+- **Node.js** (v14 or higher) - [Download](https://nodejs.org/)
+- **Docker Desktop / Rancher** - [Download](https://www.docker.com/products/docker-desktop/)
+- **Git** (optional) - [Download](https://git-scm.com/)
+
+## Installation & Setup
+
+### Step 1: Clone the repository
+
+```bash
+git clone https://github.com/Teodor-Kostov/angular-workshop
+cd REST-api
+```
+
+### Step 2: Install dependencies
+
+```bash
+npm install
+```
+
+### Step 3: Start MongoDB with Docker
+
+```bash
+docker-compose up -d
+```
+
+This starts:
+- **MongoDB** on port `27017`
+- **Mongo Express** on port `8081` (Web UI for database)
+
+### Step 4: Start the server
+
+```bash
+npm start
+```
+
+The server will start on `http://localhost:3000`
+
+## Available URLs
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| REST API | http://localhost:3000/api | Main API endpoint |
+| Swagger Docs | http://localhost:3000/api-docs | Interactive API documentation |
+| Mongo Express | http://localhost:8081 | Database admin UI |
 
 ## API Endpoints
 
@@ -109,84 +227,6 @@ The role is returned from the API in the user profile (`role: 'admin'` or `role:
 - `PUT /courts/:id` - Update court (admin)
 - `DELETE /courts/:id` - Delete court (admin)
 
-## How Authentication Works
-
-1. User logs in with email/password
-2. Backend sets a session cookie
-3. All API requests include `withCredentials: true` to send the cookie
-4. `AuthService` keeps track of the current user and their role
-5. `authGuard` protects routes that require login
-6. Header menu updates based on login state and role
-
-## Notes
-
-- Courts can be deactivated without deleting them (useful for maintenance)
-- The navigation menu changes based on whether you're logged in and if you're an admin
-- Session persists via cookies, so refreshing the page keeps you logged in
-
 ---
-
-
-# REST-api for Angular course in SoftUni refactored by Teodor Kostov for Angular Course
-
-For for more details see the READMI.md in angular-workspo repo
-
-## Prerequisites
-
-Before running this server, make sure you have the following installed:
-
-- **Node.js** (v14 or higher) - [Download](https://nodejs.org/)
-- **Docker Desktop/ Rancher or simmilar Desctop Containerisation tool** - [Download](https://www.docker.com/products/docker-desktop/)
-- **Git** (optional) - [Download](https://git-scm.com/)
-
-## Installation & Setup
-
-### Step 1: Clone the repository (or download the project)
-
-```bash
-git clone https://github.com/Teodor-Kostov/angular-workshop
-cd REST-api
-```
-
-### Step 2: Install Node.js dependencies
-
-```bash
-npm install
-```
-
-### Step 3: Start the MongoDB database with Docker
-
-The project uses Docker Compose to run MongoDB and Mongo Express (a web-based MongoDB admin interface).
-
-```bash
-docker-compose up -d
-```
-
-This command starts:
-- **MongoDB** on port `27017` - The database server
-- **Mongo Express** on port `8081` - Web UI to view/manage database
-
-To check if containers are running:
-```bash
-docker ps
-```
-
-You should see two containers: `rest-api-mongodb` and `rest-api-mongo-express`
-
-### Step 4: Start the Node.js server
-
-```bash
-npm start
-```
-
-The server will start on `http://localhost:3000`
-
-## Available URLs
-
-| Service | URL | Description |
-|---------|-----|-------------|
-| REST API | http://localhost:3000/api | Main API endpoint |
-| Swagger Docs | http://localhost:3000/api-docs | Interactive API documentation |
-| Mongo Express | http://localhost:8081 | Database admin UI |
 
 SoftUni Angular Course Project
