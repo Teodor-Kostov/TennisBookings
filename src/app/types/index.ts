@@ -4,18 +4,10 @@ export type User = {
   email: string;
   tel?: string;
   password?: string;
+  role?: string;
   created_at?: string;
   updatedAt?: string;
 };
-
-export type UserForAuth = {
-  id: string,
-  firstName: string,
-  secondName: string,
-  tel?: string,
-  email: string,
-  password: string
-}
 
 
 // a value that can be also null or undefined
