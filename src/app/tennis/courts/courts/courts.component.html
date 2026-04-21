@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="page-header">
+        <h2>Manage Courts</h2>
+        <a routerLink="/courts/add" class="btn btn-add">
+            <i class="pi pi-plus"></i> Add Court
+        </a>
+    </div>
+
+    <div class="row courts-grid">
+        @for (court of courts(); track court._id) {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card court-card">
+                    <div class="court-image-wrapper">
+                        <img [src]="court.type === 'Hard' ? 'Tennis+Hard+Court.webp' : 'other-court-types.jpg'"
+                             [alt]="court.type + ' court'"
+                             class="court-image" />
+                        <span class="court-type-badge" [class.hard]="court.type === 'Hard'" [class.clay]="court.type === 'Clay'">
+                            {{ court.type }}
+                        </span>
+                    </div>
+                    <div class="card-body court-card-body">
+                        <h4 class="court-title">Court #{{ court.number }}</h4>
+                        <div class="court-status" [class.active]="court.isActive" [class.inactive]="!court.isActive">
+                            <i class="pi" [class.pi-check-circle]="court.isActive" [class.pi-times-circle]="!court.isActive"></i>
+                            {{ court.isActive ? 'Active' : 'Inactive' }}
+                        </div>
+                        <div class="court-actions">
+                            <button class="btn btn-toggle"
+                                    [class.btn-deactivate]="court.isActive"
+                                    [class.btn-activate]="!court.isActive"
+                                    (click)="toggleStatus(court)">
+                                <i class="pi" [class.pi-ban]="court.isActive" [class.pi-check]="!court.isActive"></i>
+                                {{ court.isActive ? 'Deactivate' : 'Activate' }}
+                            </button>
+                            <button class="btn btn-delete" (click)="deleteCourt(court)">
+                                <i class="pi pi-trash"></i>Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        } @empty {
+            <div class="col-12">
+                <div class="empty-state">
+                    <i class="pi pi-inbox"></i>
+                    <p>No courts found.</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

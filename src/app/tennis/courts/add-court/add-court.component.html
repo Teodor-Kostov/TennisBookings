@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+        <div class="card auth">
+            <div class="card-body auth-card">
+                <div class="auth-avatar">
+                   <img src="images.jpg" class="surface-image" />
+                </div>
+                <h3 class="form-title">Add New Court</h3>
+                <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+                    <div class="form-group">
+                        <label for="courtNumber">Court Number:</label>
+                        <input
+                            type="number"
+                            name="courtNumber"
+                            id="courtNumber"
+                            class="form-control"
+                            [class.input-error]="courtNumberInput.invalid && courtNumberInput.touched"
+                            placeholder="Enter court number"
+                            [(ngModel)]="courtNumber"
+                            #courtNumberInput="ngModel"
+                            required
+                            min="1"
+                        >
+                        @if (courtNumberInput.invalid && courtNumberInput.touched) {
+                            @if (courtNumberInput.errors?.['required']) {
+                                <p class="error">Court number is required!</p>
+                            }
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label for="courtType">Court Type:</label>
+                        <select
+                            name="courtType"
+                            id="courtType"
+                            class="form-control"
+                            [(ngModel)]="courtType"
+                            #courtTypeInput="ngModel"
+                            required
+                        >
+                            @for (type of courtTypes; track type) {
+                                <option [value]="type">{{ type }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input
+                                type="checkbox"
+                                name="isActive"
+                                [(ngModel)]="isActive"
+                            >
+                            <span>Active</span>
+                        </label>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-my"
+                        [disabled]="form.invalid"
+                    >
+                        Create Court
+                    </button>
+                </form>
+                <div class="text-center back-link">
+                    <a routerLink="/courts">Back to Courts</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
