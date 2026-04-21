@@ -1,59 +1,192 @@
-# TennisBookings
+# Tennis Bookings 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+# For REST-Api Information see below 
 
-## Development server
+A web application for booking tennis courts. Built with Angular and PrimeNG.
 
-To start a local development server, run:
+## What is this?
+As a dedicated tennis player i've decide to make a simple Tennis court booking.
+This app lets users book tennis courts at a tennis club. Users can see available time slots, make reservations, and manage their bookings. Admins have extra features to manage the courts themselves.
+
+## Features
+
+### For Everyone (Guest)
+- View the home page
+- Register for an account
+- Login
+
+### For Logged-in Users
+- **Book a Court** - Browse available time slots and make a reservation
+- **My Bookings** - View and manage your upcoming bookings
+- **Profile** - Update your account details
+
+### For Admins
+- **Manage Courts** - View all courts, activate/deactivate them, or delete them
+- **Add Court** - Create new courts (Hard or Clay type)
+
+## Tech Stack
+
+- **Frontend:** Angular 19
+- **UI Components:** PrimeNG
+- **Styling:** Bootstrap + custom CSS
+- **Backend:** REST API (separate project)
+
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- npm
+- Backend API running
+
+### Installation
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The app will be available at `http://localhost:4200`
 
-## Code scaffolding
+### Environment
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Update `src/environments/environment.development.ts` with your API URL:
 
-```bash
-ng generate component component-name
+```typescript
+export const environment = {
+  apiUrl: 'http://localhost:3000/api'
+};
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Routes
+
+| Path | Component | Access |
+|------|-----------|--------|
+| `/home` | Home | Public |
+| `/login` | Login | Public |
+| `/register` | Register | Public |
+| `/slots` | Book a Court | Logged in |
+| `/my-bookings` | My Bookings | Logged in |
+| `/profile` | User Profile | Logged in |
+| `/courts` | Manage Courts | Admin |
+| `/courts/add` | Add Court | Admin |
+
+## User Roles
+
+- **Guest** - Can only see home page and login/register
+- **User** - Can book courts and manage their bookings
+- **Admin** - Has all user permissions + court management
+
+The role is returned from the API in the user profile (`role: 'admin'` or `role: 'user'`).
+
+## Court Types
+
+- **Hard** - Hard surface courts 
+- **Clay** - Clay surface courts
+
+## API Endpoints
+
+### Auth
+- `POST /login` - Login
+- `POST /register` - Register
+- `POST /logout` - Logout
+- `GET /users/profile` - Get profile
+- `PUT /users/profile` - Update profile
+
+### Bookings
+- `GET /bookings/my` - User's bookings
+- `GET /bookings/busy` - Busy time slots
+- `POST /bookings` - Create booking
+- `PUT /bookings/:id` - Update booking
+
+### Courts
+- `GET /courts` - All courts
+- `GET /courts/:id` - Single court
+- `POST /courts` - Create court (admin)
+- `PUT /courts/:id` - Update court (admin)
+- `DELETE /courts/:id` - Delete court (admin)
+
+## How Authentication Works
+
+1. User logs in with email/password
+2. Backend sets a session cookie
+3. All API requests include `withCredentials: true` to send the cookie
+4. `AuthService` keeps track of the current user and their role
+5. `authGuard` protects routes that require login
+6. Header menu updates based on login state and role
+
+## Notes
+
+- Courts can be deactivated without deleting them (useful for maintenance)
+- The navigation menu changes based on whether you're logged in and if you're an admin
+- Session persists via cookies, so refreshing the page keeps you logged in
+
+---
+
+
+# REST-api for Angular course in SoftUni refactored by Teodor Kostov for Angular Course
+
+For for more details see the READMI.md in angular-workspo repo
+
+## Prerequisites
+
+Before running this server, make sure you have the following installed:
+
+- **Node.js** (v14 or higher) - [Download](https://nodejs.org/)
+- **Docker Desktop/ Rancher or simmilar Desctop Containerisation tool** - [Download](https://www.docker.com/products/docker-desktop/)
+- **Git** (optional) - [Download](https://git-scm.com/)
+
+## Installation & Setup
+
+### Step 1: Clone the repository (or download the project)
 
 ```bash
-ng generate --help
+git clone https://github.com/Teodor-Kostov/angular-workshop
+cd REST-api
 ```
 
-## Building
-
-To build the project run:
+### Step 2: Install Node.js dependencies
 
 ```bash
-ng build
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Step 3: Start the MongoDB database with Docker
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+The project uses Docker Compose to run MongoDB and Mongo Express (a web-based MongoDB admin interface).
 
 ```bash
-ng test
+docker-compose up -d
 ```
 
-## Running end-to-end tests
+This command starts:
+- **MongoDB** on port `27017` - The database server
+- **Mongo Express** on port `8081` - Web UI to view/manage database
 
-For end-to-end (e2e) testing, run:
+To check if containers are running:
+```bash
+docker ps
+```
+
+You should see two containers: `rest-api-mongodb` and `rest-api-mongo-express`
+
+### Step 4: Start the Node.js server
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The server will start on `http://localhost:3000`
 
-## Additional Resources
+## Available URLs
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+| Service | URL | Description |
+|---------|-----|-------------|
+| REST API | http://localhost:3000/api | Main API endpoint |
+| Swagger Docs | http://localhost:3000/api-docs | Interactive API documentation |
+| Mongo Express | http://localhost:8081 | Database admin UI |
+
+SoftUni Angular Course Project
