@@ -17,7 +17,12 @@
                     <div class="flex items-center gap-2">
                         @if (user$ | async; as user) {
                             <span class="user-greeting">Welcome, {{ user.username }}</span>
-                            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+                            <p-avatar
+                                image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                                shape="circle"
+                                (click)="toggleAvatarMenu($event)"
+                                class="cursor-pointer" />
+                            <p-menu #avatarMenu [model]="avatarMenuItems" [popup]="true" />
                         } @else {
                            <a routerLink="/login" class="nav-link">Login</a>
                             <a routerLink="/register" class="nav-link">Register</a>

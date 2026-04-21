@@ -1,4 +1,4 @@
-<div class="date-picker">
+<div class="filter-bar">
   <label for="date">Select Date:</label>
   <input
     type="date"
@@ -6,6 +6,7 @@
     [value]="selectedDate | date:'yyyy-MM-dd'"
     (change)="onDateChange($event)"
   >
+  <label >Select a Surface:</label>
   <app-court-type-dropdown (courtTypeChange)="onCourtTypeSelected($event)"></app-court-type-dropdown>
 </div>
 
