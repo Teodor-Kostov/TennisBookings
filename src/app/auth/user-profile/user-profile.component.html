@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+    <div class="card auth">
+      <div class="card-body auth-card">
+        <div class="auth-avatar">
+          <img src="https://pluspng.com/img-png/user-png-icon-account-avatar-human-male-man-men-people-person-download-svg-download-png-edit-icon-512.png" alt="user" class="user-image">
+        </div>
+        <h3 class="profile-title">User Profile</h3>
+
+        @if (!isEditMode) {
+          <!-- READONLY MODE -->
+          <div class="profile-info">
+            <div class="info-row">
+              <span class="info-label">Username:</span>
+              <span class="info-value">{{ profileDetails.username }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Email:</span>
+              <span class="info-value">{{ profileDetails.email }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Phone:</span>
+              <span class="info-value">{{ profileDetails.tel }}</span>
+            </div>
+            <button class="btn btn-my" (click)="toggleEditMode()">Edit Profile</button>
+          </div>
+        } @else {
+          <!-- EDIT MODE -->
+          <form [formGroup]="form" (ngSubmit)="handleSaveProfile()">
+            <!-- Username -->
+            <div class="form-group">
+              <label for="username">Username:</label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                class="form-control"
+                [class.input-error]="form.get('username')?.invalid && form.get('username')?.touched"
+                formControlName="username"
+              >
+              @if (form.get('username')?.touched) {
+                @if (form.get('username')?.errors?.['required']) {
+                  <p class="error">Username is required!</p>
+                }
+                @if (form.get('username')?.errors?.['minlength']) {
+                  <p class="error">Username must be at least 5 characters!</p>
+                }
+              }
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                class="form-control"
+                [class.input-error]="form.get('email')?.invalid && form.get('email')?.touched"
+                formControlName="email"
+              >
+              @if (form.get('email')?.touched) {
+                @if (form.get('email')?.errors?.['required']) {
+                  <p class="error">Email is required!</p>
+                }
+                @if (form.get('email')?.errors?.['emailValidator']) {
+                  <p class="error">Email is not valid!</p>
+                }
+              }
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+              <label for="tel">Phone:</label>
+              <div class="tel-group">
+                <select name="select-tel" id="select-tel" class="form-control tel-select">
+                  <option value="00359">+359</option>
+                </select>
+                <input
+                  type="text"
+                  name="tel"
+                  id="tel"
+                  class="form-control tel-input"
+                  formControlName="tel"
+                >
+              </div>
+            </div>
+
+            <div class="btn-wrapper">
+              <button type="button" class="btn btn-cancel" (click)="onCancel($event)">Cancel</button>
+              <button
+                type="submit"
+                class="btn btn-save"
+                [disabled]="form.invalid"
+              >Save</button>
+            </div>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>
