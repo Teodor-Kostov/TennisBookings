@@ -1,10 +1,51 @@
-# Tennis Bookings
+# Tennis Bookings - Monorepo
 
-## 1. Application Purpose
+This project contains both the frontend Angular application and the backend REST API.
+
+## Project Structure
+
+```
+TennisBookings/
+├── tennisbooking/     # Angular 19 frontend
+├── rest-api/          # Node.js REST API backend
+└── README.md
+```
+
+## Quick Start
+
+### 1. Start the Backend (REST API)
+
+```bash
+cd rest-api
+npm install
+docker-compose up -d   # Start MongoDB
+npm start              # Start server on http://localhost:3000
+```
+
+### 2. Start the Frontend (Angular)
+
+```bash
+cd tennisbooking
+npm install
+ng serve               # Start on http://localhost:4200
+```
+
+## Available URLs
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| Frontend | http://localhost:4200 | Angular application |
+| REST API | http://localhost:3000/api | API endpoint |
+| Swagger Docs | http://localhost:3000/api-docs | API documentation |
+| Mongo Express | http://localhost:8081 | Database admin UI |
+
+---
+
+## Application Purpose
 
 The goal of the application is to help users book tennis courts at a tennis club. Users can view available time slots, make reservations, and manage their bookings. Administrators have additional features to manage the courts themselves.
 
-## 2. User Roles
+## User Roles
 
 **Guest (Not Authenticated User)**
 - Can view the home page
@@ -22,123 +63,6 @@ The goal of the application is to help users book tennis courts at a tennis club
 - Can create new courts (Hard or Clay type)
 - Can delete courts
 
-## 3. Public Features
-
-Features accessible without login:
-- Home page
-- Login page
-- Registration page
-
-**Authenticated User Features**
-
-Functionality available after login:
-- Book a Court - Browse available time slots and make a reservation
-- My Bookings - View and manage upcoming bookings
-- Profile - Update account details
-
-**Admin Features**
-
-Additional functionality for admins:
-- Manage Courts - View all courts, activate/deactivate them
-- Add Court - Create new courts
-- Delete Court - Remove courts from the system
-
-## 4. Main Application Flow
-
-1. User opens the Home page
-2. User registers or logs in
-3. Authenticated user navigates to the booking page
-4. User selects an available time slot and court
-5. User creates a booking
-6. The booking appears in My Bookings
-7. User can view, edit, or cancel their bookings
-
-## 5. Data Structure
-
-**Court Object**
-- id
-- name
-- type (Hard / Clay)
-- isActive
-- createdAt
-
-**Booking Object**
-- id
-- courtId
-- userId
-- date
-- timeSlot
-- createdAt
-
-**User Object**
-- id
-- email
-- password
-- role (user / admin)
-- createdAt
-
-## 6. Project Architecture
-
-```
-src/
-├── app/
-│   ├── components/
-│   │   ├── home/
-│   │   ├── login/
-│   │   ├── register/
-│   │   ├── slots/
-│   │   ├── my-bookings/
-│   │   ├── profile/
-│   │   └── courts/
-│   ├── services/
-│   ├── guards/
-│   ├── models/
-│   └── shared/
-├── environments/
-└── assets/
-```
-
-## 7. Technologies Used
-
-- Angular 19
-- TypeScript
-- RxJS
-- PrimeNG (UI Components)
-- Bootstrap + custom CSS
-- REST API (Backend)
-
-## 8. How to Run the Project
-
-### Prerequisites
-- Node.js (v18+)
-- npm
-- Backend API running
-
-### Installation
-
-1. Clone the repository
-
-2. Install dependencies
-```bash
-npm install
-```
-
-3. Configure environment - Update `src/environments/environment.development.ts` with your API URL:
-```typescript
-export const environment = {
-  apiUrl: 'http://localhost:3000/api'
-};
-```
-
-4. Start the application
-```bash
-ng serve
-```
-
-5. Open the application at http://localhost:4200
-
----
-
 ## Routes
 
 | Path | Component | Access |
@@ -151,59 +75,6 @@ ng serve
 | `/profile` | User Profile | Logged in |
 | `/courts` | Manage Courts | Admin |
 | `/courts/add` | Add Court | Admin |
-
----
-
-# REST API Information
-
-For more details see the README.md in the angular-workshop repo.
-
-## Prerequisites
-
-- **Node.js** (v14 or higher) - [Download](https://nodejs.org/)
-- **Docker Desktop / Rancher** - [Download](https://www.docker.com/products/docker-desktop/)
-- **Git** (optional) - [Download](https://git-scm.com/)
-
-## Installation & Setup
-
-### Step 1: Clone the repository
-
-```bash
-git clone https://github.com/Teodor-Kostov/angular-workshop
-cd REST-api
-```
-
-### Step 2: Install dependencies
-
-```bash
-npm install
-```
-
-### Step 3: Start MongoDB with Docker
-
-```bash
-docker-compose up -d
-```
-
-This starts:
-- **MongoDB** on port `27017`
-- **Mongo Express** on port `8081` (Web UI for database)
-
-### Step 4: Start the server
-
-```bash
-npm start
-```
-
-The server will start on `http://localhost:3000`
-
-## Available URLs
-
-| Service | URL | Description |
-|---------|-----|-------------|
-| REST API | http://localhost:3000/api | Main API endpoint |
-| Swagger Docs | http://localhost:3000/api-docs | Interactive API documentation |
-| Mongo Express | http://localhost:8081 | Database admin UI |
 
 ## API Endpoints
 
@@ -226,6 +97,27 @@ The server will start on `http://localhost:3000`
 - `POST /courts` - Create court (admin)
 - `PUT /courts/:id` - Update court (admin)
 - `DELETE /courts/:id` - Delete court (admin)
+
+## Technologies
+
+**Frontend (tennisbooking/)**
+- Angular 19
+- TypeScript
+- RxJS
+- PrimeNG (UI Components)
+- Bootstrap + custom CSS
+
+**Backend (rest-api/)**
+- Node.js
+- Express
+- MongoDB
+- Docker
+
+## Prerequisites
+
+- Node.js (v18+)
+- npm
+- Docker Desktop / Rancher (for MongoDB)
 
 ---
 

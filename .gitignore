@@ -1,13 +1,16 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
+# Node modules for both projects
+tennisbooking/node_modules/
+rest-api/node_modules/
+
 # Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+tennisbooking/dist/
+tennisbooking/tmp/
+tennisbooking/out-tsc/
+tennisbooking/bazel-out/
 
 # Node
-/node_modules
 npm-debug.log
 yarn-error.log
 
@@ -28,14 +31,18 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+# Keep project-specific vscode settings
+!tennisbooking/.vscode/
+!rest-api/.vscode/
+
+# Angular
+tennisbooking/.angular/
+tennisbooking/.sass-cache/
+tennisbooking/connect.lock
+tennisbooking/coverage/
+tennisbooking/libpeerconnection.log
+tennisbooking/testem.log
+tennisbooking/typings/
 
 # System files
 .DS_Store

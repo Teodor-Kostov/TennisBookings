@@ -33,6 +33,7 @@ label {
   background-color: #d39e00;
   border-color: #d39e00;
   color: #fff;
+  width: 100%;
 }
 .simple-keyboard {
   max-width: 850px;
@@ -56,4 +57,16 @@ label {
 }
 .input-error {
   border-color: red;
+}
+
+.form-control {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 5rem;
+}
+
+.form-group {
+
+  flex-wrap: wrap;
+
 }
