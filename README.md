@@ -1,5 +1,12 @@
 # Tennis Bookings
 
+## Mocked Users
+
+|Role | Email | Username | Pass |
+|-----|-------|-----------|------|
+|User | user@test.com | testuser | user123 |
+|Admin | admin@test.com | testadmin | admin123 |
+
 ## 1. Application Purpose
 
 The goal of the application is to help users book tennis courts at a tennis club. Users can view available time slots, make reservations, and manage their bookings. Administrators have additional features to manage the courts themselves.

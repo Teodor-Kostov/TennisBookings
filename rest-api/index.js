@@ -8,9 +8,11 @@ const cors = require('cors');
 const { errorHandler } = require('./utils');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
+const seedDatabase = require('./config/seed');
 
 dbConnector()
-  .then(() => {
+  .then(async () => {
+    await seedDatabase();
     const config = require('./config/config');
 
     const app = require('express')();
